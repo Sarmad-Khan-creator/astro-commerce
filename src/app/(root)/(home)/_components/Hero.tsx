@@ -11,7 +11,7 @@ const Hero = () => {
       </p>
       <Button
         variant="outline"
-        className="mt-10 bg-white bg-opacity-45 border-opacity-20 text-white hover:bg-secondary-gray hover:bg-opacity-70 hover:text-white"
+        className="mt-10 bg-secondary-gray bg-opacity-45 border-opacity-20 text-white hover:bg-secondary-gray hover:bg-opacity-70 hover:text-white"
       >
         Explore
       </Button>

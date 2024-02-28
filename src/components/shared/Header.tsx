@@ -1,3 +1,6 @@
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
+import { LogInIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,7 +9,9 @@ const Header = () => {
   return (
     <>
       <header className="bg-primary-dark px-28 py-5 w-full flex-between">
-        <h1 className="h1-bold text-white">Astro Commerce</h1>
+        <Link href={"/"}>
+          <h1 className="h1-bold text-white">Astro Commerce</h1>
+        </Link>
         <div className="flex gap-6 items-center">
           <Link href="#">
             <Image src="/icons/cart.svg" alt="cart" width={24} height={24} />
@@ -30,6 +35,22 @@ const Header = () => {
               />
             </div>
           </Link>
+          <SignedIn>
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "rounded-md",
+                },
+              }}
+            />
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <LogInIcon className="text-white cursor-pointer" />
+            </SignInButton>
+          </SignedOut>
         </div>
       </header>
       <hr className="border border-gray-500" />

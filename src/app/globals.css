@@ -87,6 +87,10 @@
   .flex-between {
     @apply flex items-center justify-between
   }
+
+  .primary-gradient {
+    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  }
 }
 
 ul > li > p::before {

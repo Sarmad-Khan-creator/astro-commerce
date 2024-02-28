@@ -17,9 +17,13 @@ const Navbar = () => {
           const isActive = pathname.includes(link.url);
 
           return (
-            <Link href="#" key={link.title}>
+            <Link href={link.url} key={link.title}>
               <Button
-                className={cn(isActive ? "bg-gray-300" : "bg-transparent")}
+                className={cn(
+                  isActive
+                    ? "bg-secondary-gray bg-opacity-45 hover:bg-secondary-gray hover:bg-opacity-70"
+                    : "bg-transparent hover:bg-secondary-gray hover:bg-opacity-70"
+                )}
               >
                 {link.title}
               </Button>
