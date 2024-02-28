@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createUser } from "@/lib/actions/user.action";
+import { createUser, deleteUser, updateUser } from "@/lib/actions/user.action";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.NEXT_CLERK_WEBHOOK_SECRET;
@@ -62,33 +62,33 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "OK", user: mongoUser });
   }
 
-//   if (eventType === "user.updated") {
-//     const { id, email_addresses, image_url, username, first_name, last_name } =
-//       evt.data;
+  if (eventType === "user.updated") {
+    const { id, email_addresses, image_url, username, first_name, last_name } =
+      evt.data;
 
-//     const updatedUser = await updateUser({
-//       clerkId: id,
-//       updateData: {
-//         name: `${first_name} ${last_name && last_name}`,
-//         picture: image_url,
-//         email: email_addresses[0].email_address,
-//         username: username!,
-//       },
-//       path: `/profile/${id}`,
-//     });
+    const updatedUser = await updateUser({
+      clerkId: id,
+      updateData: {
+        name: `${first_name} ${last_name && last_name}`,
+        picture: image_url,
+        email: email_addresses[0].email_address,
+        username: username!,
+      },
+      path: `/profile/${id}`,
+    });
 
-//     return NextResponse.json({ message: "OK", user: updateUser });
-//   }
+    return NextResponse.json({ message: "OK", user: updatedUser });
+  }
 
-//   if (eventType === "user.deleted") {
-//     const { id } = evt.data;
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
 
-//     const deletedUser = await deleteUser({
-//       clerkId: id!,
-//     });
+    const deletedUser = await deleteUser({
+      clerkId: id!,
+    });
 
-//     return NextResponse.json({ message: "OK", user: deletedUser });
-//   }
+    return NextResponse.json({ message: "OK", user: deletedUser });
+  }
 
   return NextResponse.json({ message: "OK" });
 }
