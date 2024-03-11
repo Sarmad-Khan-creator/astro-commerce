@@ -15,5 +15,37 @@ export interface UpdateUserProps {
 }
 
 export interface DeletUserProps {
-    clerkId: string
+  clerkId: string;
+}
+
+export interface GetWishlistedProductProps {
+  userId: string;
+  productId: string | undefined;
+}
+
+export interface WishlistedProductProps extends GetWishlistedProductProps {
+  path?: string;
+}
+
+export interface GetProductProps {
+  category?: string;
+  designer?: string;
+  material?: string;
+  size?: string;
+}
+
+export interface SearchParamsProps {
+  searchParams: { [key: string]: string | undefined };
+}
+
+export interface GetAllCartProductsProps {
+  userId: string;
+}
+
+export interface CartProps extends GetAllCartProductsProps {
+  productId: string;
+}
+
+export interface addToCartProps extends CartProps {
+  path: string;
 }

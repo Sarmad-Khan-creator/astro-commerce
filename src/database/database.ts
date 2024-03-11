@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
-let isCOnnected = false;
+let isConnected = false;
 
 export const connectToDatabase = async () => {
-  if (!isCOnnected) {
+  if (!isConnected) {
     mongoose.set("strictQuery", true);
 
     try {
       await mongoose.connect(process.env.MONGODB_URI as string, {
         dbName: "astro-commerce",
       });
-      isCOnnected = true;
+      isConnected = true;
     } catch (error) {
       throw error;
     }
