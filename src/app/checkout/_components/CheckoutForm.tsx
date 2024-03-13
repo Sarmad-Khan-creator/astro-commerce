@@ -6,29 +6,62 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { placeOrder } from "@/lib/actions/order.action";
 import { CheckoutFormSchema } from "@/lib/validation";
+import { IProduct } from "@/models/product.model";
 import { IUser } from "@/models/user.model";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const CheckoutForm = ({ user }: { user: IUser }) => {
+const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
+  const proId = products.filter((product) => product._id);
+  const router = useRouter()
   const form = useForm<z.infer<typeof CheckoutFormSchema>>({
     resolver: zodResolver(CheckoutFormSchema),
     defaultValues: {
       email: "" || user.email,
       nameOnCard: "",
-      cardNumber: 0,
+      cardNumber: "",
       expiryDate: "",
-      cvc: 0,
+      cvc: "",
       address: "" || user.address,
     },
   });
 
-  const onSubmit = async (data: any) => {};
+  const onSubmit = async (values: z.infer<typeof CheckoutFormSchema>) => {
+    try {
+      // @ts-ignore
+      await placeOrder({
+        product: proId,
+        user: user && user.id,
+        quantity: 1,
+        name: values.nameOnCard,
+        email: values.email,
+        address: values.address,
+      }, user._id);
+
+      toast({
+        title: "Success",
+        description: "Order placed successfully",
+        variant: "success",
+      })
+
+      router.push("/user/cart")
+    } catch (error) {
+      toast({
+        title: "Failed",
+        description: "Something wrong. Order cannot be place",
+        variant: "destructive",
+      });
+    }
+  };
   return (
     <Form {...form}>
       <form
@@ -80,6 +113,7 @@ const CheckoutForm = ({ user }: { user: IUser }) => {
                   className="border border-secondary-gray h-[45px]"
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -109,11 +143,13 @@ const CheckoutForm = ({ user }: { user: IUser }) => {
                 <FormLabel className="text-primary-dark">CVC</FormLabel>
                 <FormControl>
                   <Input
+                  type="number"
                     placeholder="Enter three digit number"
                     {...field}
                     className="border border-secondary-gray h-[45px]"
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />

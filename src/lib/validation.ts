@@ -26,8 +26,8 @@ export const ReviewFormSchema = z.object({
 export const CheckoutFormSchema = z.object({
   email: z.string().email().describe("Email"),
   nameOnCard: z.string().describe("Name on Card"),
-  cardNumber: z.number().describe("Card Number"),
+  cardNumber: z.string().describe("Card Number"),
   expiryDate: z.string().describe("Expiration Date"),
-  cvc: z.number().describe("CVC"),
+  cvc: z.string().describe("CVC"),
   address: z.string().describe("Address"),
 });

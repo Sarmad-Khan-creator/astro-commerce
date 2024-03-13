@@ -4,9 +4,14 @@ import { DeleteIcon, Edit2Icon, EditIcon } from "lucide-react";
 import Image from "next/image";
 import DeleteAlert from "../_components/DeleteAlert";
 import Link from "next/link";
+import { SearchParamsProps } from "@/lib/actions/shared";
+import Pagination from "@/components/shared/Pagination";
 
-const Dashboard = async () => {
-  const products = await getAllProducts({});
+const Dashboard = async ({ searchParams }: SearchParamsProps) => {
+  const { products, isNext } = await getAllProducts({
+    page: searchParams.page ? +searchParams.page : 1,
+    pageSize: 8,
+  });
 
   return (
     <div className="mt-4 mx-7 w-full">
@@ -40,6 +45,10 @@ const Dashboard = async () => {
             </div>
           </div>
         ))}
+        <Pagination
+          pageNumber={searchParams.page ? +searchParams.page : 1}
+          isNext={isNext}
+        />
       </div>
     </div>
   );

@@ -32,6 +32,8 @@ export interface GetProductProps {
   designer?: string;
   material?: string;
   size?: string;
+  page?: number;
+  pageSize?: number;
 }
 
 export interface SearchParamsProps {

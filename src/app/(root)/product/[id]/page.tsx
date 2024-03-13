@@ -14,6 +14,7 @@ import { auth } from "@clerk/nextjs";
 import { findUserByClerkId } from "@/lib/actions/user.action";
 import AddToWishlist from "@/components/shared/AddToWishlist";
 import AddToCart from "@/components/shared/AddToCart";
+import { getTimestamp } from "@/lib/utils";
 
 const rat = [5, 4, 3, 2, 1];
 
@@ -116,7 +117,7 @@ const ProductDetail = async ({ params }: ParamsProps) => {
             {review?.map((rev) => (
               <div
                 key={rev.rating._id}
-                className="w-full flex flex-col gap-5 bg-gray-200 p-3 rounded-lg"
+                className="w-full flex flex-col gap-5 bg-gray-100 p-3 rounded-lg"
               >
                 <Rating ratingValue={rev.rating.rating} />
                 <p className="text-sm text-secondary-gray">
@@ -130,11 +131,11 @@ const ProductDetail = async ({ params }: ParamsProps) => {
                     height={40}
                     className="rounded-full"
                   />
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-1">
                     <h3 className="text-[14px] font-semibold">
                       {rev.user.name}
                     </h3>
-                    {/* <p>{rev.rating.createdAt.toLocalString()}</p> */}
+                    <p className="text-xs">{getTimestamp(rev.rating.createdAt)}</p>
                   </div>
                 </div>
                 <hr />

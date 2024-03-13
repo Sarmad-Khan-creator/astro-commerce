@@ -1,7 +1,6 @@
 export const links = [
   { title: "Store", url: "/store" },
   { title: "Designers", url: "/designers" },
-  { title: "Categories", url: "/categories" },
 ];
 
 export const CategoryItems = [
@@ -18,8 +17,6 @@ export const CategoryItems = [
 export const footerLinks = [
   { title: "Store", link: "/store" },
   { title: "About Us", link: "/about" },
-  { title: "Blog", link: "/blog" },
-  { title: "Products", link: "/products" },
 ];
 
 export const categories = [
@@ -30,10 +27,14 @@ export const categories = [
 ];
 
 export const designers = [
-  { title: "Khadi", value: "khadi" },
-  { title: "Alkaram", value: "alkaram" },
-  { title: "Lawrencepur", value: "lawrencepur" },
-  { title: "Gul Ahmad", value: "gul ahmad" },
+  { title: "Khadi", value: "khadi", image: "/images/khadi.jpg" },
+  { title: "Alkaram", value: "alkaram", image: "/images/alkaram.jpg" },
+  {
+    title: "Lawrencpur",
+    value: "lawrencpur",
+    image: "/images/lawrencpur.jpg",
+  },
+  { title: "Gul Ahmad", value: "gul ahmad", image: "/images/gulahmad.jpg" },
 ];
 
 export const materials = [

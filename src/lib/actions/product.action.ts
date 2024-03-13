@@ -6,6 +6,8 @@ import { revalidatePath } from "next/cache";
 import { GetProductProps } from "./shared";
 import { FilterQuery } from "mongoose";
 import { ObjectId } from "mongodb";
+import Wishlist from "@/models/wishlist.model";
+import Cart from "@/models/cart.model";
 
 export const createProduct = async (data: Partial<IProduct>) => {
   const {
@@ -49,9 +51,14 @@ export const getAllProducts = async ({
   designer,
   material,
   size,
+  page = 1,
+  pageSize,
 }: GetProductProps) => {
   try {
     await connectToDatabase();
+
+    let skipAmount;
+    if (pageSize) skipAmount = (page - 1) * pageSize;
 
     // Initialize an empty query object
     let query: FilterQuery<typeof Product> = {};
@@ -63,9 +70,15 @@ export const getAllProducts = async ({
     if (size) query["sizes"] = size;
 
     // Use the query object to filter products
-    const products = await Product.find(query);
+    const products = await Product.find(query)
+      .skip(Number(skipAmount))
+      .limit(Number(pageSize));
 
-    return products;
+    const totalProducts = await Product.countDocuments(query);
+
+    const isNext = totalProducts > Number(skipAmount) + products.length;
+
+    return { products, isNext };
   } catch (error) {
     throw error;
   }
@@ -75,7 +88,12 @@ export const deleteProduct = async (id: string, path: string) => {
   try {
     await connectToDatabase();
 
-    await Product.findByIdAndDelete(id);
+    const product = await Product.findById(id);
+
+    await Product.findByIdAndUpdate(product._id)
+    await Wishlist.findOneAndDelete({ product: product._id })
+    await Cart.findOneAndDelete({ product: product._id })
+    
 
     revalidatePath(path);
   } catch (error) {
@@ -185,20 +203,43 @@ export const getProductReview = async (productId: string) => {
           as: "user",
         },
       },
-      { $unwind: "$user" }
+      { $unwind: "$user" },
     ]);
 
-    return review
+    return review;
   } catch (error) {}
 };
 
-export const updateProduct = async (productId: string, data: Partial<IProduct>) => {
+export const updateProduct = async (
+  productId: string,
+  data: Partial<IProduct>
+) => {
   try {
-    await connectToDatabase()
-    await Product.findByIdAndUpdate(productId, data)
+    await connectToDatabase();
+    await Product.findByIdAndUpdate(productId, data);
 
-    revalidatePath("/admin/dashboard")
+    revalidatePath("/admin/dashboard");
   } catch (error) {
     throw error;
   }
-}
+};
+
+export const getSearchProducts = async (searchQuery: string) => {
+  try {
+    await connectToDatabase();
+    let query: FilterQuery<typeof Product> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: searchQuery, $options: "i" } },
+        { description: { $regex: searchQuery, $options: "i" } },
+      ];
+    }
+
+    const products = await Product.find(query).limit(5);
+
+    return products;
+  } catch (error) {
+    throw error;
+  }
+};

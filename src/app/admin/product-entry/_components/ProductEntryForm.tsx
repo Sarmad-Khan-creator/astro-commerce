@@ -27,7 +27,7 @@ import { toast } from "@/components/ui/use-toast";
 
 interface Props {
   type?: string;
-  productInfo: IProduct;
+  productInfo?: IProduct;
 }
 
 const ProductEntryForm = ({ type, productInfo }: Props) => {
@@ -99,7 +99,7 @@ const ProductEntryForm = ({ type, productInfo }: Props) => {
           materials: values.materials,
           sizes: values.sizes,
           colors: values.colors,
-          _id: productInfo._id,
+          _id: productInfo?._id,
         });
 
         toast({

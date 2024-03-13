@@ -6,14 +6,16 @@ import { getAllProducts } from "@/lib/actions/product.action";
 import { auth } from "@clerk/nextjs";
 import { findUserByClerkId } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/lib/actions/shared";
+import Pagination from "@/components/shared/Pagination";
 
 const Store = async ({ searchParams }: SearchParamsProps) => {
-
-  const products = await getAllProducts({
+  const { products, isNext } = await getAllProducts({
     category: searchParams.category,
     designer: searchParams.designer,
     material: searchParams.material,
     size: searchParams.size,
+    page: searchParams.page ? +searchParams.page : 1,
+    pageSize: 12,
   });
   const { userId } = auth();
   const userData = await findUserByClerkId({ clerkId: userId });
@@ -25,7 +27,6 @@ const Store = async ({ searchParams }: SearchParamsProps) => {
         <h1 className="font-semibold text-[30px] text-primary-dark">
           Our Products
         </h1>
-        <Filters />
       </div>
       <section className="flex gap-10 mt-5">
         <Sidebar />
@@ -45,6 +46,12 @@ const Store = async ({ searchParams }: SearchParamsProps) => {
           ))}
         </div>
       </section>
+      <div className="mt-7">
+        <Pagination
+          pageNumber={searchParams.page ? +searchParams.page : 1}
+          isNext={isNext}
+        />
+      </div>
     </section>
   );
 };
