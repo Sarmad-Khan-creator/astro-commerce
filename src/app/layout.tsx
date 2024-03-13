@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "Astro Commerce",
   description:
     "An astro commerce website is a plateform where customers can search for products and services and then buy it",
+  icons: {
+    icon: "/icons/logo.svg"
+  }
 };
 
 export default function RootLayout({
