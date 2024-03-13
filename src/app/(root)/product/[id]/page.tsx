@@ -117,7 +117,7 @@ const ProductDetail = async ({ params }: ParamsProps) => {
             {review?.map((rev) => (
               <div
                 key={rev.rating._id}
-                className="w-full flex flex-col gap-5 bg-gray-100 p-3 rounded-lg"
+                className="w-[700px] flex flex-col gap-5 bg-gray-100 p-3 rounded-lg"
               >
                 <Rating ratingValue={rev.rating.rating} />
                 <p className="text-sm text-secondary-gray">
