@@ -32,6 +32,7 @@ const AddToCart = ({ userId, productId, path }: AddToCartProps) => {
         toast({
           title: "Denied",
           description: "You need to login to perform this action",
+          variant: "destructive"
         });
 
         return;
@@ -50,6 +51,7 @@ const AddToCart = ({ userId, productId, path }: AddToCartProps) => {
         toast({
           title: "Successful",
           description: "Product added to cart",
+          variant: "success"
         });
       }
     } catch (error) {

@@ -39,6 +39,7 @@ const AddToWishlist = ({ userId, productId, path }: AddToWIshlistProps) => {
       toast({
         title: "Denied",
         description: "You need to login to perform this action",
+        variant: "destructive"
       });
       return;
     }
@@ -65,6 +66,7 @@ const AddToWishlist = ({ userId, productId, path }: AddToWIshlistProps) => {
       toast({
         title: "Added",
         description: "Product added to wishlist",
+        variant: "success"
       });
 
       router.push(path, { scroll: false })
