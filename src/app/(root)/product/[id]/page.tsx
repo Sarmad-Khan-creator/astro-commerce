@@ -6,8 +6,6 @@ import {
 } from "../../../../lib/actions/product.action";
 import Image from "next/image";
 import Rating from "@/components/shared/Rating";
-import { Button } from "@/components/ui/button";
-import { HeartIcon } from "lucide-react";
 import SingleRating from "@/components/shared/SingleRating";
 import ReviewModal from "./_components/ReviewModal";
 import { auth } from "@clerk/nextjs";
@@ -15,8 +13,6 @@ import { findUserByClerkId } from "@/lib/actions/user.action";
 import AddToWishlist from "@/components/shared/AddToWishlist";
 import AddToCart from "@/components/shared/AddToCart";
 import { getTimestamp } from "@/lib/utils";
-
-const rat = [5, 4, 3, 2, 1];
 
 interface ParamsProps {
   params: {
@@ -62,12 +58,12 @@ const ProductDetail = async ({ params }: ParamsProps) => {
           <Rating ratingValue={ratingValue as number} />
           <div className="flex items-center gap-3">
             <AddToCart
-              userId={user._id.toString()}
+              userId={user && user._id.toString()}
               productId={product._id.toString()}
               path={`/product/${params.id}`}
             />
             <AddToWishlist
-              userId={user._id.toString()}
+              userId={user && user._id.toString()}
               productId={product._id.toString()}
               path={`/product/${params.id}`}
             />
@@ -110,7 +106,7 @@ const ProductDetail = async ({ params }: ParamsProps) => {
               The time is now for it to be okay to be great. People in this
               world shun people for being great.
             </p>
-            <ReviewModal productId={params.id} userId={user._id} />
+            <ReviewModal productId={params.id} userId={user && user._id} />
           </div>
 
           <div className="flex flex-col gap-7">
