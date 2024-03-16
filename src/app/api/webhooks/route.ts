@@ -51,12 +51,23 @@ export async function POST(req: Request) {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
 
+    let role;
+    if (
+      email_addresses[0].email_address === "sarmadkhan2694@gmail.com" ||
+      email_addresses[0].email_address === "Sarmadkhan2694@gmail.com"
+    ) {
+      role = "admin";
+    } else {
+      role = "user";
+    }
+
     const mongoUser = await createUser({
       clerkId: id,
       name: `${first_name} ${last_name && last_name}`,
       picture: image_url,
       email: email_addresses[0].email_address,
       username: username!,
+      role: role,
     });
 
     return NextResponse.json({ message: "OK", user: mongoUser });

@@ -8,6 +8,7 @@ export interface IUser extends Document {
   password?: string;
   address?: string;
   picture?: string;
+  role: string
 }
 
 const UserSchema = new Schema({
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
   password: String,
   address: String,
   picture: String,
+  role: {type: String, default: "user", required: true}
 });
 
 const User = models.User || model("User", UserSchema);

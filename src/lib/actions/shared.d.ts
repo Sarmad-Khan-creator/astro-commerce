@@ -6,6 +6,7 @@ export interface CreateUserProps {
   email: string;
   picture: string;
   username: string;
+  role: string
 }
 
 export interface UpdateUserProps {

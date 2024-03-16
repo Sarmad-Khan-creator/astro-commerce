@@ -12,7 +12,7 @@ import { revalidatePath } from "next/cache";
 import Wishlist from "@/models/wishlist.model";
 
 export const createUser = async (data: CreateUserProps) => {
-  const { clerkId, name, email, picture, username } = data;
+  const { clerkId, name, email, picture, username, role } = data;
 
   try {
     await connectToDatabase();
@@ -22,6 +22,7 @@ export const createUser = async (data: CreateUserProps) => {
       email,
       picture,
       username,
+      role
     });
 
     return user;
