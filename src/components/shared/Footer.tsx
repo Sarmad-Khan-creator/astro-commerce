@@ -13,7 +13,7 @@ const Footer = () => {
           <Link
             href={item.link}
             key={item.title}
-            className="text-secondary-gray"
+            className="text-secondary-gray max-sm:text-xs"
           >
             {item.title}
           </Link>
