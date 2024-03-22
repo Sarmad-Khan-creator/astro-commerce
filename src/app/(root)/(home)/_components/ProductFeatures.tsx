@@ -8,18 +8,18 @@ const ProductFeatures = () => {
         <h2 className="text-primary-dark font-semibold text-[30px]">
           Product Features
         </h2>
-        <p className="text-center w-[650px] text-[18px] text-secondary-gray font-notoSans">
+        <p className="text-center w-[650px] text-[18px] text-secondary-gray font-notoSans max-sm:text-[14px] max-sm:w-[100%] max-sm:mx-5">
           Society has put up so many boundaries, so many limitations on what’s
           right and wrong that it’s almost impossible
         </p>
       </div>
 
-      <div className="w-full gap-x-5 gap-y-5 grid grid-rows-2 grid-cols-5">
-        <div className="row-span-2 col-span-3 flex flex-col gap-3">
+      <div className="w-full gap-x-5 gap-y-5 grid grid-rows-2 grid-cols-5 max-sm:grid-cols-1 max-sm:grid-rows-2">
+        <div className="row-span-2 col-span-3 flex flex-col gap-3 max-sm:mx-5">
           <h3 className="text-[24px] font-semibold text-primary-dark">
             Product Description
           </h3>
-          <p className="text-[16px] text-secondary-gray font-normal w-[550px] leading-7">
+          <p className="text-[16px] text-secondary-gray font-normal w-[550px] leading-7 max-sm:w-full">
             Society has put up so many boundaries, so many limitations on what’s
             right and wrong that it’s almost impossible to get a pure thought
             out. It’s like a little kid, a little boy, looking at colors, and no
@@ -27,7 +27,7 @@ const ProductFeatures = () => {
             shouldn’t like pink because that’s for girls, or you’d instantly
             become a gay two-year-old.
           </p>
-          <ul className="w-[550px] mt-10 text-secondary-gray h-full flex-between flex-col">
+          <ul className="w-[550px] mt-10 text-secondary-gray h-full flex-between flex-col max-sm:w-full max-sm:gap-3">
             <li>
               <p>
                 Oil is a primary source of energy for various sectors, including
@@ -49,7 +49,7 @@ const ProductFeatures = () => {
             </li>
           </ul>
         </div>
-        <div className="w-[420px] h-[216px] col-span-2 row-span-1 relative">
+        <div className="w-[420px] h-[216px] col-span-2 row-span-1 relative max-sm:w-[95%] max-sm:mx-5">
           <Image
             src="/images/oil-image-1.jpg"
             alt="oil image 1"

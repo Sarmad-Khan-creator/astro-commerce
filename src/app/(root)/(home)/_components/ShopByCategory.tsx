@@ -26,7 +26,7 @@ const ShopByCategory = () => {
         </Link>
       </div>
 
-      <div className="flex-center gap-10">
+      <div className="flex-center gap-10 max-sm:flex-col">
         {CategoryItems.map((item) => (
           <div key={item.category} className="w-[243px] h-[363px] relative">
             <Image
@@ -60,11 +60,11 @@ const ShopByCategory = () => {
         ))}
       </div>
 
-      <div className="w-full h-[487px] bg-heroImage rounded-2xl bg-cover flex-center flex-col gap-10">
-        <h2 className="font-bold text-[50px] font-notoSans text-white">
+      <div className="w-full h-[487px] bg-heroImage rounded-2xl bg-cover flex-center flex-col gap-10 max-sm:w-screen max-sm:rounded-none">
+        <h2 className="font-bold text-[50px] font-notoSans text-white max-sm:text-[35px]">
           Basic Starter Pack
         </h2>
-        <p className="text-white text-[18px] w-[700px] text-center">
+        <p className="text-white text-[18px] w-[700px] text-center max-sm:text-[14px] max-sm:w-[95%] max-sm:mx-20">
           The time is now for it to be okay to be great. People in this world
           shun people for being great. For being a bright color. For standing
           out.

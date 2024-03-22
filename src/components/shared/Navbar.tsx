@@ -12,8 +12,8 @@ import Search from "./Search";
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className="w-full px-28 py-5 bg-primary-dark flex-between">
-      <div className="flex items-center gap-2">
+    <nav className="w-full px-28 py-5 bg-primary-dark flex-between max-sm:px-5">
+      <div className="flex items-center gap-2 max-sm:gap-0">
         {links.map((link) => {
           const isActive = pathname.includes(link.url);
 

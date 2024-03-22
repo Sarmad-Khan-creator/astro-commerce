@@ -66,13 +66,13 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-5 max-sm:mx-5"
       >
         <FormField
           name="email"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="w-full max-sm:w-[350px]">
               <FormLabel className="text-primary-dark">Email</FormLabel>
               <FormControl>
                 <Input
@@ -88,7 +88,7 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
           name="nameOnCard"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="w-full max-sm:w-[350px]">
               <FormLabel className="text-primary-dark">Name on Card</FormLabel>
               <FormControl>
                 <Input
@@ -104,7 +104,7 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
           name="cardNumber"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="w-full max-sm:w-[350px]">
               <FormLabel className="text-primary-dark">Card Number</FormLabel>
               <FormControl>
                 <Input
@@ -118,12 +118,12 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
           )}
         />
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 max-sm:flex-col max-sm:items-start">
           <FormField
             name="expiryDate"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="w-full">
+              <FormItem className="w-full max-sm:w-[350px]">
                 <FormLabel className="text-primary-dark">Expiry Date</FormLabel>
                 <FormControl>
                   <Input
@@ -139,7 +139,7 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
             name="cvc"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="w-full">
+              <FormItem className="w-full max-sm:w-[350px]">
                 <FormLabel className="text-primary-dark">CVC</FormLabel>
                 <FormControl>
                   <Input
@@ -158,7 +158,7 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
           name="address"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="w-full max-sm:w-[350px]">
               <FormLabel className="text-primary-dark">Address</FormLabel>
               <FormControl>
                 <Input
@@ -170,7 +170,7 @@ const CheckoutForm = ({ user, products }: { user: IUser; products: any[] }) => {
             </FormItem>
           )}
         />
-        <Button className="bg-primary-dark hover:bg-primary-hover">Pay</Button>
+        <Button className="bg-primary-dark hover:bg-primary-hover max-sm:w-[350px] max-sm:mb-5">Pay</Button>
       </form>
     </Form>
   );

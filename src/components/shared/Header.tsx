@@ -22,7 +22,7 @@ const Header = async () => {
   }
   return (
     <>
-      <header className="bg-primary-dark px-28 py-5 w-full flex-between">
+      <header className="bg-primary-dark px-28 py-5 w-full flex-between max-sm:px-5">
         <Link href={"/"}>
           <h1 className="h1-bold text-white">Astro Commerce</h1>
         </Link>

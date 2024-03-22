@@ -10,29 +10,17 @@ import {
 } from "@/lib/actions/user.action";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { IProduct } from "@/models/product.model";
 
 interface AddToWIshlistProps {
   userId: string;
   productId: string;
   path: string;
+  wishlistedProducts: Partial<IProduct>
 }
 
-const AddToWishlist = ({ userId, productId, path }: AddToWIshlistProps) => {
-  const [wishlistedProduct, setWishlistedProduct] = useState({});
-  const router = useRouter()
-
-  useEffect(() => {
-    const WishlistedProduct = async () => {
-      const product = await getWishlistedProduct({
-        userId: userId,
-        productId: productId,
-      });
-
-      setWishlistedProduct(JSON.parse(product));
-    };
-
-    WishlistedProduct();
-  }, [userId, productId]);
+const AddToWishlist = ({ userId, productId, path, wishlistedProducts }: AddToWIshlistProps) => {
+  const router = useRouter();
 
   const handleWishlistProduct = async () => {
     if (!userId) {
@@ -44,7 +32,7 @@ const AddToWishlist = ({ userId, productId, path }: AddToWIshlistProps) => {
       return;
     }
 
-    if (wishlistedProduct) {
+    if (wishlistedProducts) {
       await removeFromWishlistProduct({
         userId: userId,
         productId: productId,
@@ -79,7 +67,7 @@ const AddToWishlist = ({ userId, productId, path }: AddToWIshlistProps) => {
       onClick={handleWishlistProduct}
     >
       <HeartFilledIcon
-        className={cn(wishlistedProduct ? "text-red-500" : "text-black")}
+        className={cn(wishlistedProducts ? "text-red-500" : "text-black")}
       />
     </Button>
   );

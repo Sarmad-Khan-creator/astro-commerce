@@ -4,28 +4,19 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import {
   addToCart,
-  getCartProduct,
   removeFromCart,
 } from "@/lib/actions/cart.action";
+import { IProduct } from "@/models/product.model";
 
 interface AddToCartProps {
   userId: string;
   productId: string;
   path: string;
+  inCartProducts: Partial<IProduct>
 }
 
-const AddToCart = ({ userId, productId, path }: AddToCartProps) => {
-  const [inCartProduct, setInCartProduct] = useState({});
-
-  useEffect(() => {
-    const getProduct = async () => {
-      const product = await getCartProduct({ userId, productId });
-
-      setInCartProduct(product);
-    };
-
-    getProduct();
-  }, [userId, productId]);
+const AddToCart = ({ userId, productId, path, inCartProducts }: AddToCartProps) => {
+  
   const handleCart = async () => {
     try {
       if (!userId) {
@@ -38,7 +29,7 @@ const AddToCart = ({ userId, productId, path }: AddToCartProps) => {
         return;
       }
 
-      if (inCartProduct) {
+      if (inCartProducts) {
         await removeFromCart({ userId, productId, path });
         toast({
           title: "Removed",
@@ -60,7 +51,7 @@ const AddToCart = ({ userId, productId, path }: AddToCartProps) => {
   };
   return (
     <Button onClick={handleCart}>
-      {inCartProduct ? "Remove From Cart" : "Add To Cart"}
+      {inCartProducts ? "Remove From Cart" : "Add To Cart"}
     </Button>
   );
 };

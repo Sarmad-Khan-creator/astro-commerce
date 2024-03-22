@@ -18,7 +18,7 @@ const Checkout = async () => {
   const { totalPrice } = await getAllProductsTotalPrice(user._id);
 
   return (
-    <main className="pl-28 flex">
+    <main className="pl-28 flex max-sm:pl-0 max-sm:flex-col-reverse">
       <aside className="flex flex-col flex-1 gap-10 mt-16 pr-96">
         <Link href="/user/cart">
           <ArrowLeft size={25} />
@@ -65,7 +65,7 @@ const Checkout = async () => {
             <p className="text-line_gray">Rs.0</p>
           </div>
 
-          <div className="flex items-center justify-between mt-14">
+          <div className="flex items-center justify-between mt-14 max-sm:mt-7 max-sm:mb-5">
             <p className="font-semibold text-lg text-line_gray">Total</p>
             <p className="font-semibold text-lg text-line_gray">Rs.{totalPrice}</p>
           </div>

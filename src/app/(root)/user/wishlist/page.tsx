@@ -12,10 +12,10 @@ const Wishlist = async () => {
   const user = await findUserByClerkId({ clerkId });
   const wishlistedProducts = await getAllWishlistedProducts(user._id);
   return (
-    <main className="mx-28 mt-14">
+    <main className="mx-28 mt-14 min-h-[70vh] max-sm:mx-5">
       <p className="text-sm text-secondary-gray">Product / Wishlist</p>
 
-      <section className="flex flex-wrap gap-4 mt-10">
+      <section className="flex flex-wrap gap-4 mt-10 max-sm:flex-col max-sm:flex-center">
         {wishlistedProducts.map((product) => (
           <ProductCard
             key={product._id}

@@ -12,8 +12,8 @@ const Hero = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.7 }}
       >
-        <h1 className="font-bold text-[50px] text-white">Collection is here</h1>
-        <p className="text-[18px] text-white w-[750px] text-center">
+        <h1 className="font-bold text-[50px] text-white max-sm:text-[35px]">Collection is here</h1>
+        <p className="text-[18px] text-white w-[750px] text-center max-sm:text-[14px] max-sm:px-5 max-sm:w-[100%]">
           The time is now for it to be okay to be great. People in this world
           shun people for being great. For being a bright color. For standing
           out.

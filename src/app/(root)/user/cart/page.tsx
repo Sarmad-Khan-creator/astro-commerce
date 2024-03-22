@@ -4,11 +4,11 @@ import {
 } from "@/lib/actions/cart.action";
 import { findUserByClerkId } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
-import Image from "next/image";
 import React from "react";
 import CartProduct from "./_components/CartProduct";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import MobileCartProduct from "./_components/MobileCartProduct";
 
 const Cart = async () => {
   const { userId: clerkId } = auth();
@@ -16,9 +16,9 @@ const Cart = async () => {
   const cartProducts = await getAllCartProducts(user._id);
   const { totalPrice } = await getAllProductsTotalPrice(user._id);
   return (
-    <main className="mx-28 mt-14">
+    <main className="mx-28 mt-14 max-sm:mx-5">
       <p className="text-secondary-gray">Product / Cart</p>
-      <section className="mt-10 flex flex-col gap-5">
+      <section className="mt-10 flex flex-col gap-5 max-sm:hidden">
         <div className="flex items-center justify-between">
           <p className="font-semibold flex-1">Product</p>
           <p className="font-semibold flex-1">Price</p>
@@ -35,7 +35,17 @@ const Cart = async () => {
         ))}
       </section>
 
-      <div className="flex justify-end mt-10">
+      <div className="sm:hidden mt-10">
+        {JSON.parse(cartProducts).map((product: any) => (
+          <MobileCartProduct
+            key={product._id}
+            product={product.product}
+            quantity={product.quantity}
+          />
+        ))}
+      </div>
+
+      <div className="flex justify-end mt-10 max-sm:justify-center">
         <div className="border border-secondary-gray rounded-lg p-5 flex flex-col gap-3 w-[300px]">
           <h2 className="font-semibold text-lg">Order Summary</h2>
           <div className="flex justify-between items-center">

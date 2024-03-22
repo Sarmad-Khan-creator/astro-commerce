@@ -9,10 +9,11 @@ import Rating from "@/components/shared/Rating";
 import SingleRating from "@/components/shared/SingleRating";
 import ReviewModal from "./_components/ReviewModal";
 import { auth } from "@clerk/nextjs";
-import { findUserByClerkId } from "@/lib/actions/user.action";
+import { findUserByClerkId, getWishlistedProduct } from "@/lib/actions/user.action";
 import AddToWishlist from "@/components/shared/AddToWishlist";
 import AddToCart from "@/components/shared/AddToCart";
 import { getTimestamp } from "@/lib/utils";
+import { getCartProduct } from "@/lib/actions/cart.action";
 
 interface ParamsProps {
   params: {
@@ -28,6 +29,16 @@ const ProductDetail = async ({ params }: ParamsProps) => {
   const singleRating = await getProductSingleRating(params.id);
   const review = await getProductReview(params.id);
 
+  const inCartProducts = await getCartProduct({
+    userId: user && user._id,
+    productId: product._id,
+  })
+
+  const wishlistedProducts = await getWishlistedProduct({
+    userId: user && user._id,
+    productId: product._id,
+  })
+
   let ratingValue;
 
   if (totalRating) {
@@ -35,10 +46,10 @@ const ProductDetail = async ({ params }: ParamsProps) => {
     ratingValue = Math.floor(rating);
   }
   return (
-    <main className="mx-28 my-10">
+    <main className="mx-28 my-10 max-sm:mx-5">
       <h2 className="font-semibold text-lg">{product.title}</h2>
-      <section className="flex gap-44 mt-10">
-        <div className="flex flex-col gap-5">
+      <section className="flex gap-44 mt-10 max-sm:flex-col max-sm:gap-7">
+        <div className="flex flex-col gap-5 max-sm:flex-row">
           {product.images.map((image: string) => (
             <div key={image} className="relative w-[90px] h-[110px]">
               <Image src={image} alt="product image" fill />
@@ -50,22 +61,24 @@ const ProductDetail = async ({ params }: ParamsProps) => {
         </div>
 
         <div className="flex flex-col gap-7">
-          <h2 className="font-bold text-4xl font-notoSans">{product.title}</h2>
+          <h2 className="font-bold text-4xl font-notoSans max-sm:text-3xl max-sm:text-center">{product.title}</h2>
           <p className="font-semibold text-2xl font-notoSans">
             Rs. {product.originalPrice}
           </p>
-          <p className="text-secondary-gray w-[500px]">{product.description}</p>
+          <p className="text-secondary-gray w-[500px] max-sm:w-full">{product.description}</p>
           <Rating ratingValue={ratingValue as number} />
           <div className="flex items-center gap-3">
             <AddToCart
               userId={user && user._id.toString()}
               productId={product._id.toString()}
               path={`/product/${params.id}`}
+              inCartProducts={inCartProducts}
             />
             <AddToWishlist
               userId={user && user._id.toString()}
               productId={product._id.toString()}
               path={`/product/${params.id}`}
+              wishlistedProducts={JSON.parse(wishlistedProducts)}
             />
           </div>
         </div>
@@ -73,12 +86,12 @@ const ProductDetail = async ({ params }: ParamsProps) => {
 
       <section className="flex flex-col gap-14 mt-24">
         <div className="flex items-center flex-col justify-center">
-          <h2 className="font-bold text-4xl font-notoSans">
+          <h2 className="font-bold text-4xl font-notoSans max-sm:text-3xl max-sm:text-center">
             Our Customer{"'"}s Opinion
           </h2>
         </div>
 
-        <div className="flex gap-60">
+        <div className="flex gap-60 max-sm:flex-col max-sm:gap-14">
           <div className="flex flex-col gap-7">
             <h2 className="font-bold text-2xl font-notoSans">Client Reviews</h2>
             <div className="flex gap-2 items-center">
@@ -109,11 +122,11 @@ const ProductDetail = async ({ params }: ParamsProps) => {
             <ReviewModal productId={params.id} userId={user && user._id} />
           </div>
 
-          <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-7 max-sm:w-full">
             {review?.map((rev) => (
               <div
                 key={rev.rating._id}
-                className="w-[700px] flex flex-col gap-5 bg-gray-100 p-3 rounded-lg"
+                className="w-[700px] flex flex-col gap-5 bg-gray-100 p-3 rounded-lg max-sm:w-full"
               >
                 <Rating ratingValue={rev.rating.rating} />
                 <p className="text-sm text-secondary-gray">

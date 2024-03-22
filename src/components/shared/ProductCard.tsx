@@ -2,21 +2,12 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
-import { HeartIcon } from "lucide-react";
 import Link from "next/link";
-import {
-  addToWishlistProduct,
-  getWishlistedProduct,
-  removeFromWishlistProduct,
-} from "@/lib/actions/user.action";
-import { IUser } from "@/models/user.model";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
-import { cn } from "@/lib/utils";
-import { toast } from "../ui/use-toast";
-import { revalidatePath } from "next/cache";
 import AddToWishlist from "./AddToWishlist";
 import AddToCart from "./AddToCart";
+import { IProduct } from "@/models/product.model";
+import { getCartProduct } from "@/lib/actions/cart.action";
+import { getWishlistedProduct } from "@/lib/actions/user.action";
 
 interface Props {
   category: string;
@@ -45,6 +36,27 @@ const ProductCard = ({
   path,
 }: Props) => {
   const [variants, setVariants] = useState(variant);
+  const [inCartProducts, setInCartProducts] = useState<Partial<IProduct>>({})
+  const [wishlistedProducts, setWishlistedProducts] = useState<Partial<IProduct>>({})
+
+  useEffect(() => {
+    const products = async () => {
+      const cartProducts = await getCartProduct({
+        userId: userId,
+        productId: _id as string,
+      })
+
+      const wishlisteProducts = await getWishlistedProduct({
+        userId: userId,
+        productId: _id as string,
+      })
+
+      setInCartProducts(cartProducts)
+      setWishlistedProducts(JSON.parse(wishlisteProducts))
+    }
+
+    products()
+  }, [userId, _id])
 
   const handleMouseEnter = () => {
     setVariants({
@@ -110,11 +122,13 @@ const ProductCard = ({
           userId={userId}
           productId={_id as string}
           path={path as string}
+          inCartProducts={inCartProducts}
         />
         <AddToWishlist
           userId={userId}
           productId={_id as string}
           path={path as string}
+          wishlistedProducts={wishlistedProducts}
         />
       </motion.div>
     </motion.div>
