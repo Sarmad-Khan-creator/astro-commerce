@@ -27,7 +27,7 @@ const Checkout = async () => {
           <CheckoutForm user={user} products={JSON.parse(cartProducts)} />
         </div>
       </aside>
-      <aside className="flex-1 w-full h-screen bg-primary-dark">
+      <aside className="flex-1 min-w-full max-h-fit h-screen bg-primary-dark">
         <div className="flex flex-col gap-5 mt-16 mx-5">
           {JSON.parse(cartProducts).map((product: any) => (
             <>
