@@ -6,7 +6,7 @@ import { deleteProduct } from "@/lib/actions/product.action";
 
 const DeleteAlert = ({ id }: { id: string }) => {
   const handleDeleteAction = async () => {
-    await deleteProduct(id, "dashboard");
+    await deleteProduct(id, "/dashboard");
   };
   return (
     <Alert

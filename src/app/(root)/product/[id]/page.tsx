@@ -1,4 +1,5 @@
 import {
+  changeImagePosition,
   getProductById,
   getProductRating,
   getProductReview,
@@ -9,11 +10,15 @@ import Rating from "@/components/shared/Rating";
 import SingleRating from "@/components/shared/SingleRating";
 import ReviewModal from "./_components/ReviewModal";
 import { auth } from "@clerk/nextjs";
-import { findUserByClerkId, getWishlistedProduct } from "@/lib/actions/user.action";
+import {
+  findUserByClerkId,
+  getWishlistedProduct,
+} from "@/lib/actions/user.action";
 import AddToWishlist from "@/components/shared/AddToWishlist";
 import AddToCart from "@/components/shared/AddToCart";
 import { getTimestamp } from "@/lib/utils";
 import { getCartProduct } from "@/lib/actions/cart.action";
+import ImageSelection from "./_components/ImageSelection";
 
 interface ParamsProps {
   params: {
@@ -32,12 +37,12 @@ const ProductDetail = async ({ params }: ParamsProps) => {
   const inCartProducts = await getCartProduct({
     userId: user && user._id,
     productId: product._id,
-  })
+  });
 
   const wishlistedProducts = await getWishlistedProduct({
     userId: user && user._id,
     productId: product._id,
-  })
+  });
 
   let ratingValue;
 
@@ -45,27 +50,26 @@ const ProductDetail = async ({ params }: ParamsProps) => {
     const rating = totalRating / product.rating.length;
     ratingValue = Math.floor(rating);
   }
+
   return (
     <main className="mx-28 my-10 max-sm:mx-5">
       <h2 className="font-semibold text-lg">{product.title}</h2>
       <section className="flex gap-44 mt-10 max-sm:flex-col max-sm:gap-7">
-        <div className="flex flex-col gap-5 max-sm:flex-row">
-          {product.images.map((image: string) => (
-            <div key={image} className="relative w-[90px] h-[110px]">
-              <Image src={image} alt="product image" fill />
-            </div>
-          ))}
-        </div>
+        <ImageSelection product={product} />
         <div className="w-[350px] h-[450px] relative">
           <Image src={product.images[0]} alt="product image" fill />
         </div>
 
         <div className="flex flex-col gap-7">
-          <h2 className="font-bold text-4xl font-notoSans max-sm:text-3xl max-sm:text-center">{product.title}</h2>
+          <h2 className="font-bold text-4xl font-notoSans max-sm:text-3xl max-sm:text-center">
+            {product.title}
+          </h2>
           <p className="font-semibold text-2xl font-notoSans">
             Rs. {product.originalPrice}
           </p>
-          <p className="text-secondary-gray w-[500px] max-sm:w-full">{product.description}</p>
+          <p className="text-secondary-gray w-[500px] max-sm:w-full">
+            {product.description}
+          </p>
           <Rating ratingValue={ratingValue as number} />
           <div className="flex items-center gap-3">
             <AddToCart
@@ -144,7 +148,9 @@ const ProductDetail = async ({ params }: ParamsProps) => {
                     <h3 className="text-[14px] font-semibold">
                       {rev.user.name}
                     </h3>
-                    <p className="text-xs">{getTimestamp(rev.rating.createdAt)}</p>
+                    <p className="text-xs">
+                      {getTimestamp(rev.rating.createdAt)}
+                    </p>
                   </div>
                 </div>
                 <hr />

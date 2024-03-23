@@ -90,10 +90,9 @@ export const deleteProduct = async (id: string, path: string) => {
 
     const product = await Product.findById(id);
 
-    await Product.findByIdAndUpdate(product._id)
-    await Wishlist.findOneAndDelete({ product: product._id })
-    await Cart.findOneAndDelete({ product: product._id })
-    
+    await Product.findByIdAndDelete(product._id);
+    await Wishlist.findOneAndDelete({ product: product._id });
+    await Cart.findOneAndDelete({ product: product._id });
 
     revalidatePath(path);
   } catch (error) {
@@ -239,6 +238,53 @@ export const getSearchProducts = async (searchQuery: string) => {
     const products = await Product.find(query).limit(5);
 
     return products;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changeImagePosition = async (
+  productId: string,
+  position: number
+) => {
+  try {
+    await connectToDatabase();
+
+    const product = await Product.findById(productId);
+
+    await Product.findByIdAndUpdate(productId, {
+      $push: {
+        images: {
+          $each: [product.images[position]],
+          $position: 0,
+        },
+      },
+    });
+
+    await Product.findByIdAndUpdate(productId, [
+      {
+        $set: {
+          images: {
+            $concatArrays: [
+              {
+                $slice: [`$images`, position + 1],
+              },
+              {
+                $slice: [
+                  `$images`,
+                  position + 2,
+                  {
+                    $size: `$images`,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    revalidatePath(`/product/${productId}`);
   } catch (error) {
     throw error;
   }
