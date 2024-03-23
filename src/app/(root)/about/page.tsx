@@ -4,11 +4,11 @@ const About = () => {
   return (
     <>
       <section className="mt-14">
-        <div className="text-gray-500 text-sm ml-24">
+        <div className="text-gray-500 text-sm ml-24 max-sm:ml-5">
           Home / <span className="text-black">About</span>
         </div>
-        <div className="ml-24 flex items-center max-sm:flex-col-reverse">
-          <div className="flex-1">
+        <div className="ml-24 flex items-center max-sm:flex-col-reverse max-sm:ml-0">
+          <div className="flex-1 max-sm:ml-5">
             <h2 className="text-4xl font-extrabold">Our Story</h2>
             <p className="w-[80%] text-sm mt-5 leading-6">
               Launced in 2015, Exclusive is South Asia’s premier online shopping
