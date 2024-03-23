@@ -23,7 +23,7 @@ const About = () => {
               ranging from consumer.
             </p>
           </div>
-          <div className="w-[600px] h-[600px] relative">
+          <div className="w-[600px] h-[600px] relative max-sm:w-full max-sm:h-[500px]">
             <Image src="/images/about-image.png" alt="About" fill />
           </div>
         </div>
