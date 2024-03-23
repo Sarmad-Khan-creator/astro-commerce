@@ -6,10 +6,10 @@ import React from "react";
 const Designers = () => {
   return (
     <main className="min-h-screen flex flex-col items-center gap-24 justify-start mt-10">
-      <h1 className="text-3xl font-semibold text-primary-dark">
+      <h1 className="text-3xl font-semibold text-primary-dark max-sm:text-lg">
         We have some good designers in our store
       </h1>
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-5 max-sm:flex-col max-sm:justify-center">
         {designers.map((designer) => (
           <Link href={`/store?designer=${designer.value}`} key={designer.value}>
             <div className="w-[200px] h-[200px] relative rounded-lg">

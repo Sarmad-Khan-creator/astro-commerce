@@ -7,7 +7,7 @@ const About = () => {
         <div className="text-gray-500 text-sm ml-24">
           Home / <span className="text-black">About</span>
         </div>
-        <div className="ml-24 flex items-center">
+        <div className="ml-24 flex items-center max-sm:flex-col-reverse">
           <div className="flex-1">
             <h2 className="text-4xl font-extrabold">Our Story</h2>
             <p className="w-[80%] text-sm mt-5 leading-6">
